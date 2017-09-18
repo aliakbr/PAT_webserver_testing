@@ -40,7 +40,7 @@ Diinstall melalui apt `sudo apt-get install libev-dev`
 - Untuk setting port dapat dilakukan dengan mengedit file `/etc/nginx/sites-enabled/default` pada bagian `listen <port>`
 
 ### libev program
-- Jalankan makefile yang terdapat pada direktori ini untuk mengompilasi program
+- Jalankan makefile yang terdapat pada direktori ini untuk mengompilasi program dengan menggunakan command `make`
 - Jalankan `./server` untuk menjalankan server. Server dapat diakses pada `http://127.0.0.1:3033/500b.html`
 
 ## Melakukan Pengujian
