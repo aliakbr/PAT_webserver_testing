@@ -38,6 +38,7 @@ Diinstall melalui apt `sudo apt-get install libev-dev`
 ### NGINX
 - Letakkan halaman html pada folder `/var/www/html/`
 - Untuk setting port dapat dilakukan dengan mengedit file `/etc/nginx/sites-enabled/default` pada bagian `listen <port>`
+- Jalankan servie dengan `sudo service nginx start`
 
 ### libev program
 - Jalankan makefile yang terdapat pada direktori ini untuk mengompilasi program dengan menggunakan command `make`
