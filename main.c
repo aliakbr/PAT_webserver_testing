@@ -160,14 +160,15 @@ void read_cb(struct ev_loop *loop, struct ev_io *watcher, int revents)
         strcpy(&path[strlen(ROOT)], "/html");
         strcpy(&path[strlen("/html") + strlen(ROOT)], reqline[1]);
         printf("file: %s\n", path);
-        char header_string[] = "HTTP/1.0 200 OK\nContent-Type: text/html\nConnection: Closed\n\n\0";
-        char *body;
-        body = load_file(path);
-        strcat(header_string, body);
-        printf("%s", header_string);
         //FILE FOUND
         if ((fd = open(path, O_RDONLY)) != -1)
         {
+          char *header_string = malloc(99999);
+          char *body;
+          body = load_file(path);
+          sprintf(header_string, "HTTP/1.0 200 OK\nContent-Type: text/html\nContent-Length: %ld\nConnection: Closed\n\n", strlen(body));
+          strcat(header_string, body);
+          // printf("%s", header_string);
           send(watcher->fd, header_string,
                      strlen(header_string), 0);
 
@@ -183,6 +184,10 @@ void read_cb(struct ev_loop *loop, struct ev_io *watcher, int revents)
         }
       }
     }
+    ev_io_stop(loop,watcher);
+    free(watcher);
+    close(watcher->fd);
+    perror("stop event");
   }
 
   bzero(buffer, req);
