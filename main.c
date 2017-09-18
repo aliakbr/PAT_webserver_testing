@@ -14,6 +14,7 @@
 
 void accept_cb(struct ev_loop *loop, struct ev_io *watcher, int revents);
 void read_cb(struct ev_loop *loop, struct ev_io *watcher, int revents);
+char* load_file(char* input_file_name);
 
 char *ROOT;
 
@@ -62,6 +63,19 @@ int main()
   }
 
   return 0;
+}
+
+char* load_file(char* input_file_name){
+  char *file_contents;
+  long input_file_size;
+  FILE *input_file = fopen(input_file_name, "rb");
+  fseek(input_file, 0, SEEK_END);
+  input_file_size = ftell(input_file);
+  rewind(input_file);
+  file_contents = malloc(input_file_size * (sizeof(char)));
+  fread(file_contents, sizeof(char), input_file_size, input_file);
+  fclose(input_file);
+  return file_contents;
 }
 
 void accept_cb(struct ev_loop *loop, struct ev_io *watcher, int revents)
@@ -141,17 +155,21 @@ void read_cb(struct ev_loop *loop, struct ev_io *watcher, int revents)
           //Because if no file is specified, index.html will be opened by default
           reqline[1] = "/index.html";
         }
-        
+
         strcpy(path, ROOT);
         strcpy(&path[strlen(ROOT)], "/html");
         strcpy(&path[strlen("/html") + strlen(ROOT)], reqline[1]);
         printf("file: %s\n", path);
-
+        char header_string[] = "HTTP/1.0 200 OK\nContent-Type: text/html\nConnection: Closed\n\n\0";
+        char *body;
+        body = load_file(path);
+        strcat(header_string, body);
+        printf("%s", header_string);
         //FILE FOUND
         if ((fd = open(path, O_RDONLY)) != -1)
         {
-          send(watcher->fd, "HTTP/1.0 200 OK\nContent-Type: text/html\nConnection: Closed\n\n",
-                     strlen("HTTP/1.0 200 OK\nContent-Type: text/html\nConnection: Closed\n\n"), 0);
+          send(watcher->fd, header_string,
+                     strlen(header_string), 0);
 
           while ( (bytes_read=read(fd, data_to_send, RESPONSE_SIZE))>0 )
           {
