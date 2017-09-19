@@ -57,6 +57,7 @@ Contoh command yang digunakan dalam pengujian project ini adalah sebagai berikut
 Untuk mengobservasi usage yang digunakan oleh server kami melakukan monitoring menggunakan `htop`
 
 Skema pengujian :
+- Nyalakan server
 - Jalankan load test dengan Apache Benchmark
 - Perhatikan memory usage pada `htop` saat menjalankan load test, dari tiap proses/worker yang berjalan untuk server hitung total memory usagenya
 
