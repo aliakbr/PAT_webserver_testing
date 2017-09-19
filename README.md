@@ -54,6 +54,12 @@ Contoh command yang digunakan dalam pengujian project ini adalah sebagai berikut
 
 `ab -n 10000 -c 10000 http://127.0.0.1:80/500b.html`
 
+Untuk mengobservasi usage yang digunakan oleh server kami melakukan monitoring menggunakan `htop`
+
+Skema pengujian :
+- Jalankan load test dengan Apache Benchmark
+- Perhatikan memory usage pada `htop` saat menjalankan load test, dari tiap proses/worker yang berjalan untuk server hitung total memory usagenya
+
 ## Hasil Pengujian
 
 ### Apache Server
@@ -103,4 +109,11 @@ Pada tugas ini program libev dijalankan pada port 3033 localhost.
 
 ![Screenshot](/img/LIBEV%2020KB.png)
 
-## Analisa dan Kesimpulan
+## Hasil dalam Tabel
+
+|| Apache  | Nginx  | Libev Program  |
+|---|---|---|---|
+|  Response Time 500b | 6 |  186 | 148  |
+|  Response Time 20KB |  6 |  241 | 145.0 |
+|  Memory Usage 500b |  1.2% | 0.1%  | 5.7%  |
+|  Memory Usage 20KB   | 1.6%  | 0.1%  |  9.7% |
