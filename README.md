@@ -3,6 +3,10 @@
 ## Tentang
 Project ini dibuat untuk memenuhi tugas perkuliahan IF4031 Pengantar Aplikasi Terdistribusi. Project ini dibangun dalam lingkungan sistem Ubuntu 16.04 LTS
 
+Tugas ini dibuat oleh :
+- Ali Akbar / 13514080
+- Azka Hanif Imtiyaz / 13514086
+
 ## Instalasi & Kebutuhan Kakas
 Untuk menjalankan project ini semua kebutuhan di bawah harus terinstall pada sistem anda :
 
